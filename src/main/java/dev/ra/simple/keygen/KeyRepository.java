@@ -13,7 +13,7 @@ import java.util.Base64;
 public class KeyRepository {
 
     private static final Logger _log = LoggerFactory.getLogger(KeyRepository.class);
-    public void saveKey(SecretKey secretKey, String storageLocation) throws  {
+    public void saveKey(SecretKey secretKey, String storageLocation)  {
         try(FileOutputStream fos = new FileOutputStream(storageLocation.concat("aes.key"))){
             fos.write(secretKey.getEncoded());
         } catch(FileNotFoundException e){
