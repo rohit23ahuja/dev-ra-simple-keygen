@@ -9,9 +9,12 @@ clone the project and run maven build using command`mvn clean package`<br/>
 This project uses maven assembly plugin and creates a single jar with all the dependencies inside folder 
 > target\simple-key-generator-1.0-SNAPSHOT-jar-with-dependencies.jar
 
-## Run the application and paramters
+## Running the application
 Run the generate using command :- <br/>
 `java -jar simple-key-generator-1.0-SNAPSHOT-jar-with-dependencies.jar CIPHER KEY_SIZE STORAGE_LOCATION` <br/>
+CIPHER - algorithm for which you want to generate key <br/>
+KEY_SIZE - key size. larger the key size stronger the encryption but higher compute used <br/>
+STORAGE_LOCATION - path on the local machine where you are running this **simple key generator** jar/application <br/>
 Examples :-
 >java -jar simple-key-generator-1.0-SNAPSHOT-jar-with-dependencies.jar AES 256 E:/ <br/>
 >java -jar simple-key-generator-1.0-SNAPSHOT-jar-with-dependencies.jar AES 256 E:/

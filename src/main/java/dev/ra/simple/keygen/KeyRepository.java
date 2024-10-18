@@ -1,5 +1,8 @@
 package dev.ra.simple.keygen;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.crypto.SecretKey;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -9,10 +12,12 @@ import java.util.Base64;
 
 public class KeyRepository {
 
-    public void saveKey(SecretKey secretKey, String storageLocation) {
+    private static final Logger _log = LoggerFactory.getLogger(KeyRepository.class);
+    public void saveKey(SecretKey secretKey, String storageLocation)  {
         try(FileOutputStream fos = new FileOutputStream(storageLocation.concat("aes.key"))){
             fos.write(secretKey.getEncoded());
         } catch(FileNotFoundException e){
+
             e.printStackTrace();
         } catch(IOException e){
             e.printStackTrace();

@@ -1,10 +1,10 @@
 package dev.ra.simple.keygen;
 
 import org.javatuples.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public enum CipherAlgos {
-
-
     DiffieHellman_1024("asymmetric"),
     DiffieHellman_2048("asymmetric"),
     DiffieHellman_4096("asymmetric"),
@@ -20,6 +20,7 @@ public enum CipherAlgos {
     HmacSHA1("symmetric"),
     HmacSHA256("symmetric");
 
+    private static final Logger _log = LoggerFactory.getLogger(CipherAlgos.class);
     private String type;
 
     CipherAlgos(String t){
@@ -29,18 +30,23 @@ public enum CipherAlgos {
     public String getType(){
         return type;
     }
-    public static Pair<Boolean, CipherAlgos> validValue(String algo, int keySize){
+    public static Pair<Boolean, CipherAlgos> validateAlgorithmParameters(String algo, int keySize) throws SimpleKeyGeneratorException{
         try{
             if (keySize==0)
                 return new Pair<Boolean, CipherAlgos>(Boolean.TRUE, CipherAlgos.valueOf(algo));
             else
                 return new Pair<Boolean, CipherAlgos>(Boolean.TRUE, CipherAlgos.valueOf(algo+"_"+keySize));
         } catch(Exception e){
-            System.err.println("Illegal algo or key size passed. Supported algos are below(key size mentioned after underscore(_) charactoer) :- ");
+            _log.error("Invalid algo or key size passed", e);
+            StringBuilder sb = new StringBuilder("Illegal algo or key size passed. Supported algos are (supported key size mentioned after underscore '_' charactoer) :- ");
+            int count =0;
             for (CipherAlgos c : CipherAlgos.values()) {
-                System.err.println(c);
+                sb.append(c.toString());
+                count++;
+                if (count<CipherAlgos.values().length) sb.append(", ");
             }
-            return new Pair<Boolean, CipherAlgos>(Boolean.FALSE, null);
+            String s = sb.toString();
+            throw new SimpleKeyGeneratorException(s);
         }
     }
 
